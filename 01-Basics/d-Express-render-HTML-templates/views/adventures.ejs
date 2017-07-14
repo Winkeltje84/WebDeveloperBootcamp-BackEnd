@@ -1,0 +1,8 @@
+<h1>Some great adventures</h1>
+
+<% adventures.forEach(function(adventure){ %>
+  <li>
+    <p><%= adventure.type%></p>
+    <img src=<%= adventure.src %> alt="" style="width:300px">
+  </li>
+<% }) %>
