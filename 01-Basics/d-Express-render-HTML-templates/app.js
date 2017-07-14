@@ -3,15 +3,16 @@ var express = require('express');
 var app = express();
 
 app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 app.get("/", function(req, res){
-  res.render("home.ejs");
+  res.render("home");
 })
 
 app.get("/sports/:sport", function(req, res){
   var sport = req.params.sport;
   console.log(sport)
-  res.render("sport.ejs", { sport: sport });
+  res.render("sport", { sport: sport });
 })
 
 app.get("/adventures", function(req, res){
@@ -29,11 +30,11 @@ app.get("/adventures", function(req, res){
       src: "https://i.ytimg.com/vi/jOSsb2GgcoU/maxresdefault.jpg"
     }
   ]
-  res.render("adventures.ejs", { adventures });
+  res.render("adventures", { adventures });
 })
 
 app.get("/external-stylesheet", function(req, res){
-  res.render("external-stylesheet.ejs");
+  res.render("external-stylesheet");
 })
 
 app.listen("1111", function(){
