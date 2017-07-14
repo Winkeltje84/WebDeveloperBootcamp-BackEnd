@@ -2,6 +2,8 @@ var express = require('express');
 
 var app = express();
 
+app.use(express.static("public"));
+
 app.get("/", function(req, res){
   res.render("home.ejs");
 })
@@ -27,7 +29,11 @@ app.get("/adventures", function(req, res){
       src: "https://i.ytimg.com/vi/jOSsb2GgcoU/maxresdefault.jpg"
     }
   ]
-  res.render("adventures.ejs", { adventures })
+  res.render("adventures.ejs", { adventures });
+})
+
+app.get("/external-stylesheet", function(req, res){
+  res.render("external-stylesheet.ejs");
 })
 
 app.listen("1111", function(){
