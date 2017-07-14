@@ -1,5 +1,13 @@
-<h1>Nothing to see at home</h1>
+<h1>Using POST request to add friend to friends array</h1>
 
+<p>steps:</p>
 <ul>
-  <li><a href="http://localhost:1111/friends">View my friends</a></li>
+  <li>npm init to create package.json</li>
+  <li>intalling express & ejs</li>
+  <li>creating /friends page showing friend list & create form with name="new_friend"</li>
+  <li>installing <strong>"body-parser"</strong> to help us getting data from our form</li>
+  <li>creating <strong>/friend/add</strong> as a <strong>app.post</strong> & include <strong>friends.push(req.body.new_friend)</strong></li>
+  <li>creating a <strong>res.redirect("/friends")</strong> in the app.post to redirect after adding friend</li>
 </ul>
+
+<a href="http://localhost:1111/friends">View my friends</a>
