@@ -1,3 +1,5 @@
+<% include partials/header %>
+
 <h1>Some great adventures</h1>
 
 <% adventures.forEach(function(adventure){ %>
@@ -6,3 +8,5 @@
     <img src=<%= adventure.src %> alt="" style="width:300px">
   </li>
 <% }) %>
+
+<% include partials/footer %>
