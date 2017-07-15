@@ -1,0 +1,16 @@
+{
+  "name": "f-api-movie-search-app",
+  "version": "1.0.0",
+  "description": "First Express API app - to search in a movie database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bas Winkel",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  }
+}
