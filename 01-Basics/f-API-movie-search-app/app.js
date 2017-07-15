@@ -10,7 +10,15 @@ app.get("/", function(req, res){
 })
 
 app.get("/search", function(req, res){
-  res.send("succes!");
+  res.send("we use this page to get search request");
+})
+
+app.get("/result", function(req, res){
+  request("http://www.omdbapi.com/?s=guardians+of+the+galaxy&apikey=thewdb", function(error, response, body){
+    if(!error && response.statusCode == 200){
+      res.send(body);
+    }
+  });
 })
 
 app.get("*", function(req, res){
