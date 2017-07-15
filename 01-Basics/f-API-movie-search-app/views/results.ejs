@@ -2,7 +2,8 @@
 
 <ol>
     <% data.forEach(function(movie){ %>
-      <li><%= movie["Title"] %></li>
+      <li><%= movie["Title"] %> - <em><%= movie["Year"] %></em></li>
     <% }) %>
-
 </ol>
+
+<a href="/">New Search</a>

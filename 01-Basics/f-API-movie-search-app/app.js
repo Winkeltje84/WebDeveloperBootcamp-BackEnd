@@ -6,15 +6,14 @@ var app = express();
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res){
-  res.redirect("/search");
-})
-
-app.get("/search", function(req, res){
-  res.send("we use this page to get search request");
+  res.render("search");
 })
 
 app.get("/results", function(req, res){
-  request("http://www.omdbapi.com/?s=amsterdam&apikey=thewdb", function(error, response, body){
+  console.log(req.query)
+  var search_term = req.query.search_term;
+  var api_search_url = "http://www.omdbapi.com/?apikey=thewdb&s=" + search_term
+  request(api_search_url, function(error, response, body){
     if(!error && response.statusCode == 200){
       var results = JSON.parse(body)["Search"];
       console.log(results)
