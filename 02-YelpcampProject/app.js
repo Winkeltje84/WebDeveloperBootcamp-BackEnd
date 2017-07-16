@@ -37,10 +37,18 @@ app.post("/campgrounds", function(req, res){
   console.log("POST /campgrounds visited");
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = {name, image};
-  campgrounds.push(newCampground);
-  res.redirect("/campgrounds");
-})
+  var newCampground = { name: name, image: image}
+  Campground.create(newCampground, function(err, newCampground){
+    if(err){
+      console.log("Could't creat campground:");
+      console.log(err);
+    } else {
+      console.log("Newley created campground:");
+      console.log(newCampground);
+      res.redirect("/campgrounds");
+    }
+  });
+});
 
 app.get("/campgrounds/new", function(req, res){
   console.log("GET /campgrounds/new visited")
