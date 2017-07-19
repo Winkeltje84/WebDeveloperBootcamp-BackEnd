@@ -43,6 +43,33 @@ app.get("/", function(req, res){
   res.redirect("/blogs");
 })
 
+app.get("/blogs/new", function(req, res){
+  console.log("GET '/blogs/new' --> show new blog form");
+  res.render("new");
+})
+
+app.post("/blogs", function(req, res){
+  console.log("POST '/blogs' --> create new blog post & redirect to blogs index")
+  console.log(req.body);
+  var title = req.body.blog.title;
+  var image = req.body.blog.image;
+  var body = req.body.blog.body;
+  var newBlogPost = { title: title, image: image, body: body}
+  Blog.create(newBlogPost, function(err, blogPost){
+        if(err){
+          console.log("there was an error!");
+          console.log(err);
+          res.render("new");
+        } else {
+          console.log("Succesfully created a Blog Post:");
+          console.log(blogPost);
+          res.redirect("/blogs");
+        }
+      }
+    )
+  }
+)
+
 app.get("/blogs", function(req, res){
   console.log("GET '/blogs --> show blog items'")
   Blog.find({}, function(err, found_blog_posts){
@@ -50,7 +77,7 @@ app.get("/blogs", function(req, res){
       console.log("Couldn't find blogposts. Error:");
       console.log(err);
     } else {
-      console.log(found_blog_posts);
+      // console.log(found_blog_posts);
       res.render("index", {blogPosts: found_blog_posts});
 
     }
