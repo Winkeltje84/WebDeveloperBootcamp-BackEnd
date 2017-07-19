@@ -1,8 +1,10 @@
+<% include partials/header %>
+
 <h1>index reached</h1>
 
 <ul>
   <% blogPosts.forEach(function(blogPost){ %>
-    <div class="">
+    <div>
       <h2>Title: <%= blogPost.title %></h2>
       <img src="<%= blogPost.image %>" alt="Blogpost image">
       <p><%= blogPost.body %></p>
@@ -11,3 +13,5 @@
 
   <% }) %>
 </ul>
+
+<% include partials/footer %>
