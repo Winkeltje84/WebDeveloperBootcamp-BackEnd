@@ -9,6 +9,7 @@
       <img src="<%= blogPost.image %>" alt="Blogpost image">
       <p><%= blogPost.body %></p>
       <p>Created on: <%= blogPost.created %></p>
+      <a href="/blogs/<%= blogPost._id %>">Read More</a>
     </div>
 
   <% }) %>

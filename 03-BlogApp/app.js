@@ -50,7 +50,6 @@ app.get("/blogs/new", function(req, res){
 
 app.post("/blogs", function(req, res){
   console.log("POST '/blogs' --> create new blog post & redirect to blogs index")
-  console.log(req.body);
   var title = req.body.blog.title;
   var image = req.body.blog.image;
   var body = req.body.blog.body;
@@ -69,6 +68,22 @@ app.post("/blogs", function(req, res){
     )
   }
 )
+
+app.get("/blogs/:id", function(req, res){
+  var id = req.params.id;
+  console.log("GET /blogs/" + id + " --> show blog post")
+  Blog.findById(id, function(err, foundBlogPost){
+    if(err){
+      console.log(err);
+      console.log("There was an error finding blog post with id " + id);
+      res.redirect("/blogs")
+    } else {
+      console.log("Succesfully found blog post, rendering show view...")
+      res.render("show", {blogPost: foundBlogPost});
+    }
+  })
+
+})
 
 app.get("/blogs", function(req, res){
   console.log("GET '/blogs --> show blog items'")
