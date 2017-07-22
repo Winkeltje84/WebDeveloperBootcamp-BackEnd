@@ -82,7 +82,20 @@ app.get("/blogs/:id", function(req, res){
       res.render("show", {blogPost: foundBlogPost});
     }
   })
+})
 
+app.get("/blogs/:id/edit", function(req, res){
+  var id = req.params.id;
+  Blog.findById(id, function(err, foundBlogPost){
+    if(err){
+      console.log(err);
+      console.log("There was an error finding blog post with id " + id);
+      res.redirect("/blogs")
+    } else {
+      console.log("Succesfully found blog post, rendering show view...")
+      res.render("edit", {blogPost: foundBlogPost});
+    }
+  })
 })
 
 app.get("/blogs", function(req, res){
@@ -94,7 +107,6 @@ app.get("/blogs", function(req, res){
     } else {
       // console.log(found_blog_posts);
       res.render("index", {blogPosts: found_blog_posts});
-
     }
   })
 })
