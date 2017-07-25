@@ -2,6 +2,7 @@ var express     = require('express');
 var request     = require('request');
 var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
+var methodOverride = require('method-override');
 
 var app = express();
 
@@ -10,6 +11,7 @@ app.use(express.static("public")) //using public folder for custom style sheet
 app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect("mongodb://localhost/blog_app");
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 
 // Mongoose Model config
 var blogSchema = new mongoose.Schema({
@@ -86,6 +88,7 @@ app.get("/blogs/:id", function(req, res){
 
 app.get("/blogs/:id/edit", function(req, res){
   var id = req.params.id;
+  console.log("GET /blogs/" + id + "edit" + " --> show blog post")
   Blog.findById(id, function(err, foundBlogPost){
     if(err){
       console.log(err);
@@ -94,6 +97,25 @@ app.get("/blogs/:id/edit", function(req, res){
     } else {
       console.log("Succesfully found blog post, rendering show view...")
       res.render("edit", {blogPost: foundBlogPost});
+    }
+  })
+})
+
+app.put("/blogs/:id", function(req, res){
+  var id = req.params.id;
+  var blogPost = req.body.blogPost;
+  // console.log(blogPost)
+  console.log("PUT /blogs/" + id + " --> blog post edit is being executed...")
+
+  // findByIdAndUpdate takes 3 arguments: id, newData & callback
+  Blog.findByIdAndUpdate(id, blogPost, function(err, updatedBlogPost){
+    if(err){
+      console.log(err);
+      console.log("There was an error finding & updating blog post with id " + id);
+      res.redirect("/blogs");
+    } else {
+      console.log("Succesfully edited blog post, rendering show view...");
+      res.redirect("/blogs/" + id);
     }
   })
 })
