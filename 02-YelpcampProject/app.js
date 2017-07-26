@@ -2,36 +2,13 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var Campground = require('./models/campgrounds')
 
 mongoose.connect("mongodb://localhost/yelp_camp");
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
-
-// SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-var Campground = mongoose.model("Campground", campgroundSchema);
-
-// Campground.create(
-//   {
-//     name: "Watercamp",
-//     image:"https://s-media-cache-ak0.pinimg.com/originals/7a/b2/88/7ab288fc21daf71f7fa73e6f87254887.jpg",
-//     description: "the wettest experience in your live!"
-//   }, function(err, campground){
-//      if(err){
-//        console.log(err);
-//      } else {
-//        console.log("Newly created campground: ");
-//        console.log(campground);
-//      }
-//    }
-// )
 
 app.get("/", function(req, res){
   console.log("GET ROOT visted")
