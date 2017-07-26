@@ -110,6 +110,7 @@ app.get("/blogs/:id/edit", function(req, res){
 
 app.put("/blogs/:id", function(req, res){
   var id = req.params.id;
+  req.body.blogPost.body = req.sanitize(req.body.blogPost.body);
   var blogPost = req.body.blogPost;
   // console.log(blogPost)
   console.log("PUT /blogs/" + id + " --> blog post edit is being executed...")
