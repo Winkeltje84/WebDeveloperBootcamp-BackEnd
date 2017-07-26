@@ -2,8 +2,10 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var Campground = require('./models/campgrounds')
+var Campground = require('./models/campgrounds');
+var seedDB = require('./seeds');
 
+seedDB();
 mongoose.connect("mongodb://localhost/yelp_camp");
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
