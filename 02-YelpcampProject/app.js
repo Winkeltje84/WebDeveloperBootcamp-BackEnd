@@ -53,12 +53,12 @@ app.get("/campgrounds/new", function(req, res){
 
 app.get("/campgrounds/:id", function(req, res){
   var id = req.params.id;
-  Campground.findById(id, function(err, foundCampground){
+  Campground.findById(id).populate("comments").exec(function(err, foundCampground){
     if(err){
       console.log("Error, no such Campground found");
     } else {
       console.log("User visits a Campground show page:");
-      console.log("campground id: " + foundCampground.id);
+      console.log(foundCampground);
       res.render("show", { campground: foundCampground});
     }
   })
