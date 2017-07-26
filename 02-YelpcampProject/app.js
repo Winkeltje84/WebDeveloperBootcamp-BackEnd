@@ -5,12 +5,11 @@ var mongoose = require('mongoose');
 var Campground = require('./models/campgrounds');
 var seedDB = require('./seeds');
 
-seedDB();
 mongoose.connect("mongodb://localhost/yelp_camp");
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.set("view engine", "ejs");
+seedDB();
 
 app.get("/", function(req, res){
   console.log("GET ROOT visted")
