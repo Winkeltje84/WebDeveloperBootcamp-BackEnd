@@ -133,6 +133,20 @@ app.get("/blogs", function(req, res){
   })
 })
 
+app.delete("/blogs/:id", function(req, res){
+  var id = req.params.id;
+  console.log("DEL /blogs/" + id + " --> deleting blogpost...");
+  Blog.findByIdAndRemove(id, function(err){
+    if(err){
+      console.log("An error occured, could not DELETE blog post");
+      console.log(err);
+    } else {
+      console.log("Succesfully deleted blog post, redirecting to blogposts...");
+      res.redirect("/blogs");
+    }
+  })
+})
+
 app.get("*", function(req, res){
   console.log("GET 'none existend' url visited");
   res.send("Sorry, you ended at a nonexistend url...");
