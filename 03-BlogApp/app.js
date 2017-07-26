@@ -3,6 +3,7 @@ var request     = require('request');
 var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
 var methodOverride = require('method-override');
+var expressSanitizer = require('express-sanitizer');
 
 var app = express();
 
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 mongoose.connect("mongodb://localhost/blog_app");
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
+app.use(expressSanitizer());
 
 // Mongoose Model config
 var blogSchema = new mongoose.Schema({
@@ -52,9 +54,14 @@ app.get("/blogs/new", function(req, res){
 
 app.post("/blogs", function(req, res){
   console.log("POST '/blogs' --> create new blog post & redirect to blogs index")
+
   var title = req.body.blog.title;
   var image = req.body.blog.image;
+
+  // use sanitize to filter out <script> tags and what is in there
+  req.body.blog.body = req.sanitize(req.body.blog.body);
   var body = req.body.blog.body;
+
   var newBlogPost = { title: title, image: image, body: body}
   Blog.create(newBlogPost, function(err, blogPost){
         if(err){
