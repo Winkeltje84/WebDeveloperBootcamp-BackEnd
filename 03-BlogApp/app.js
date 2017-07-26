@@ -78,6 +78,10 @@ app.post("/blogs", function(req, res){
   }
 )
 
+app.get("/restful", function(req,res){
+  res.render("chart");
+})
+
 app.get("/blogs/:id", function(req, res){
   var id = req.params.id;
   console.log("GET /blogs/" + id + " --> show blog post")
