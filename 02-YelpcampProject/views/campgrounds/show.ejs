@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <div class="container">
   <h1><%= campground.name %></h1>
@@ -7,13 +7,15 @@
 
   <p>description: <%= campground.description %></p>
 
+  <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>/comments/new">Write Comment</a>
+
   <% campground.comments.forEach(function(comment){ %>
     <p>
       <strong><%= comment.author %></strong> - <%= comment.text %>
     </p>
   <% }) %>
 
-  <a href="/campgrounds">Back to Campgrounds page</a>
+  <a class="btn btn-danger" href="/campgrounds">Back to Campgrounds page</a>
 </div>
 
-<% include partials/footer %>
+<% include ../partials/footer %>

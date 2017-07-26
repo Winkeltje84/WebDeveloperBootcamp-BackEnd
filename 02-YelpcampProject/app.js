@@ -3,6 +3,7 @@ var request = require('request');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Campground = require('./models/campground');
+var Comment = require('./models/comment');
 var seedDB = require('./seeds');
 
 mongoose.connect("mongodb://localhost/yelp_camp");
@@ -22,7 +23,7 @@ app.get("/campgrounds", function(req, res){
     if(err){
       console.log(err)
     } else {
-      res.render("campgrounds", {campgrounds: campgrounds});
+      res.render("campgrounds/index", {campgrounds: campgrounds});
     }
   })
 })
@@ -47,7 +48,7 @@ app.post("/campgrounds", function(req, res){
 
 app.get("/campgrounds/new", function(req, res){
   console.log("GET /campgrounds/new visited")
-  res.render("new");
+  res.render("campgrounds/new");
 })
 
 app.get("/campgrounds/:id", function(req, res){
@@ -58,10 +59,53 @@ app.get("/campgrounds/:id", function(req, res){
     } else {
       console.log("User visits a Campground show page:");
       console.log(foundCampground);
-      res.render("show", { campground: foundCampground});
+      res.render("campgrounds/show", { campground: foundCampground});
     }
   })
 })
+
+// ===== COMMENT ROUTES
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+  var id = req.params.id;
+  Campground.findById(id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+    } else {
+      res.render("comments/new", { campground: foundCampground });
+    }
+  })
+})
+
+app.post("/campgrounds/:id/comments", function(req, res){
+  var id = req.params.id;
+  console.log("POST /campgrounds/" + id + "/comments visited --> creating new comment" );
+  Campground.findById(id, function(err, campground){
+    if(err){
+      console.log(err);
+    } else {
+      var comment = req.body.comment;
+      Comment.create(comment, function(err, comment){
+          if(err){
+            console.log(err);
+          } else {
+            campground.comments.push(comment);
+            campground.save();
+            console.log("Added a comment from seeds... redirecting to show page...");
+            res.redirect('/campgrounds/' + id);
+          }
+        }
+      )
+    }
+  })
+
+
+
+});
+
+
+
+// ===== WRONG ROUTES
 
 app.get("*", function(req, res){
   console.log("GET 'none existend' url visited")
