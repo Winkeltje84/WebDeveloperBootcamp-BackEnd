@@ -24,22 +24,37 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function(req, res){
+  console.log("GET '/' reached (ROOT)")
   res.render("home");
 })
 
 app.get("/secret", function(req, res){
+  console.log("GET /secret reached");
   res.render("secret");
 })
 
 // Auth Routes
 app.get("/register", function(req, res){
+  console.log("GET /register reached");
   res.render("register");
 })
 
 app.post("/register", function(req, res){
+  console.log("POST /register reached");
   username = req.body.username;
   password = req.body.password;
-  res.send("register POST route. Username: " + username + " & password: " + password);
+  console.log("form submitted with following username & password:")
+  console.log(req.body)
+  User.register(new User({username: username}), password, function(err, user){
+    if(err){
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate("local")(req, res, function(){
+      console.log("Authentication successful, redirecting to SECRET!")
+      res.redirect("/secret");
+    })
+  })
 })
 
 app.listen("1111", function(){
