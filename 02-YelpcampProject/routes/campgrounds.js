@@ -21,7 +21,17 @@ router.post("/", isLoggedIn, function(req, res){
   var name = req.body.name;
   var image = req.body.image;
   var description = req.body.description;
-  var newCampground = { name: name, image: image, description: description}
+  var user = {
+      id: req.user._id,
+      username: req.user.username
+  }
+  var newCampground = {
+    name: name,
+    image: image,
+    description: description,
+    user: user
+  }
+
   Campground.create(newCampground, function(err, newCampground){
     if(err){
       console.log("Could't creat campground:");
@@ -35,13 +45,13 @@ router.post("/", isLoggedIn, function(req, res){
 });
 
 // GET NEW (CAMPGROUND) --> rendering form for new campground
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
   console.log("GET /campgrounds/new visited")
   res.render("campgrounds/new");
 })
 
 // GET SHOW (CAMPGROUND) --> show page of particular campground
-router.get("/:id", function(req, res){
+router.get("/:id", isLoggedIn, function(req, res){
   var id = req.params.id;
   Campground.findById(id).populate("comments").exec(function(err, foundCampground){
     if(err){
