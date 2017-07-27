@@ -16,6 +16,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 seedDB();
 
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret: "Camping actually sucks, just kidding ;-)",
+  resave: false,
+  saveUninitialized: false
+}))
+
 app.get("/", function(req, res){
   console.log("GET ROOT visted")
   res.render("home");
