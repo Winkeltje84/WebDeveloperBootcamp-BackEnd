@@ -59,7 +59,7 @@ app.post("/register", function(req, res){
 })
 
 app.get("/login", function(req, res){
-  console.log("GET /login reached");
+  console.log("GET /login reached. Rendering login form...");
   res.render("login");
 })
 
@@ -67,6 +67,12 @@ app.post("/login", passport.authenticate("local", {
   successRedirect: "/secret",
   failureRedirect: "/login"
 }), function(req, res){
+})
+
+app.get("/logout", function(req, res){
+  console.log("GET /logout reached. Let's log you out!")
+  req.logout();
+  res.redirect('/');
 })
 
 app.listen("1111", function(){
