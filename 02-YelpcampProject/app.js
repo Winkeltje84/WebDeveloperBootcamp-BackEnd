@@ -21,7 +21,12 @@ app.use(require("express-session")({
   secret: "Camping actually sucks, just kidding ;-)",
   resave: false,
   saveUninitialized: false
-}))
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function(req, res){
   console.log("GET ROOT visted")
@@ -109,15 +114,32 @@ app.post("/campgrounds/:id/comments", function(req, res){
       )
     }
   })
-
-
-
 });
+
+// AUTH ROUTES
+
+app.get("/register", function(req, res){
+  console.log("GET '/register' visited");
+  res.render('register')
+});
+
+app.post("/register", function(req, res){
+  var newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, function(err, user){
+    if(err){
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate("local")(req, res, function(){
+      console.log("Authentication successful, redirecting to '/campgrounds'");
+      res.redirect("/campgrounds");
+    });
+  });
+})
 
 
 
 // ===== WRONG ROUTES
-
 app.get("*", function(req, res){
   console.log("GET 'none existend' url visited")
   res.send("Sorry, you ended at a nonexistend url...")
