@@ -30,7 +30,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.get("/", function(req, res){
   console.log("GET ROOT visted")
-  res.render("home");
+  res.render("home", { currentUser: req.user });
 })
 
 app.get("/campgrounds", function(req, res){
@@ -39,12 +39,12 @@ app.get("/campgrounds", function(req, res){
     if(err){
       console.log(err)
     } else {
-      res.render("campgrounds/index", {campgrounds: campgrounds});
+      res.render("campgrounds/index", {campgrounds: campgrounds, currentUser: req.user});
     }
   })
 })
 
-app.post("/campgrounds", function(req, res){
+app.post("/campgrounds", isLoggedIn, function(req, res){
   console.log("POST /campgrounds visited");
   var name = req.body.name;
   var image = req.body.image;
