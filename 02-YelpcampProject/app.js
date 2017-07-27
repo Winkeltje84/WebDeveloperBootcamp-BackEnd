@@ -124,7 +124,9 @@ app.get("/register", function(req, res){
 });
 
 app.post("/register", function(req, res){
+  console.log("post '/register' executed");
   var newUser = new User({username: req.body.username});
+  console.log("authenticating user...");
   User.register(newUser, req.body.password, function(err, user){
     if(err){
       console.log(err);
@@ -137,6 +139,18 @@ app.post("/register", function(req, res){
   });
 })
 
+app.get("/login", function(req, res){
+  console.log("GET '/login' requested");
+  console.log("rendering login page...");
+  res.render('login');
+})
+
+app.post("/login", passport.authenticate("local",
+  {
+    successRedirect: "/campgrounds",
+    failureRedirect: "/login"
+  }), function(req, res){
+})
 
 
 // ===== WRONG ROUTES
