@@ -152,6 +152,13 @@ app.post("/login", passport.authenticate("local",
   }), function(req, res){
 })
 
+app.get("/logout", function(req, res){
+  console.log("GET '/logout' requested");
+  req.logout();
+  console.log("logout successful, redirecting to home...");
+  res.redirect("/");
+})
+
 
 // ===== WRONG ROUTES
 app.get("*", function(req, res){
