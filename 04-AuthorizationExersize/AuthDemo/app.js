@@ -29,19 +29,19 @@ app.get("/", function(req, res){
   res.render("home");
 })
 
-app.get("/secret", function(req, res){
-  console.log("GET /secret reached");
+app.get("/secret", isLoggedIn, function(req, res){
+  console.log("GET '/secret' reached");
   res.render("secret");
 })
 
 // Auth Routes
 app.get("/register", function(req, res){
-  console.log("GET /register reached");
+  console.log("GET '/register' reached");
   res.render("register");
 })
 
 app.post("/register", function(req, res){
-  console.log("POST /register reached");
+  console.log("POST '/register' reached");
   username = req.body.username;
   password = req.body.password;
   console.log("form submitted with following username & password:")
@@ -59,7 +59,7 @@ app.post("/register", function(req, res){
 })
 
 app.get("/login", function(req, res){
-  console.log("GET /login reached. Rendering login form...");
+  console.log("GET '/login' reached. Rendering login form...");
   res.render("login");
 })
 
@@ -72,8 +72,20 @@ app.post("/login", passport.authenticate("local", {
 app.get("/logout", function(req, res){
   console.log("GET /logout reached. Let's log you out!")
   req.logout();
+  console.log("user is logged out!")
   res.redirect('/');
 })
+
+function isLoggedIn(req, res, next){
+  console.log("user tries to reach '/secret'...")
+  console.log("checking if authenticated...")
+  if(req.isAuthenticated()){
+    console.log("authentication successfull!")
+    return next();
+  }
+  console.log("authentication failed, redirecting to '/login'...")
+  res.redirect("/login");
+}
 
 app.listen("1111", function(){
   console.log("server is running on //localhost:1111");
