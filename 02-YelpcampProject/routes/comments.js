@@ -29,6 +29,9 @@ router.post("/", function(req, res){
           if(err){
             console.log(err);
           } else {
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            comment.save();
             campground.comments.push(comment);
             campground.save();
             console.log("Added a comment from seeds... redirecting to show page...");

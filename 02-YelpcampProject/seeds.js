@@ -40,20 +40,20 @@ function seedDB(){
             console.log(err);
           } else {
             console.log("Added a campground from seeds...");
-            Comment.create(
-              {
-                text: "This is an awesome camp",
-                author: "Jeffrey"
-              }, function(err, comment){
-                if(err){
-                  console.log(err);
-                } else {
-                  campground.comments.push(comment);
-                  campground.save();
-                  console.log("Added a comment from seeds...");
-                }
-              }
-            )
+    //         Comment.create(
+    //           {
+    //             text: "This is an awesome camp",
+    //             author: "Jeffrey"
+    //           }, function(err, comment){
+    //             if(err){
+    //               console.log(err);
+    //             } else {
+    //               campground.comments.push(comment);
+    //               campground.save();
+    //               console.log("Added a comment from seeds...");
+    //             }
+    //           }
+            // )
           }
         });
       })
