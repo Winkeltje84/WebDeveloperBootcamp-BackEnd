@@ -4,6 +4,7 @@ var Comment = require('../models/comment');
 
 var router = express.Router({ mergeParams: true});
 
+// COMMENTS NEW
 router.get("/new", isLoggedIn, function(req, res){
   var id = req.params.id;
   Campground.findById(id, function(err, foundCampground){
@@ -15,6 +16,7 @@ router.get("/new", isLoggedIn, function(req, res){
   })
 })
 
+// COMMENTS POST
 router.post("/", function(req, res){
   var id = req.params.id;
   console.log("POST /campgrounds/" + id + "/comments visited --> creating new comment" );
@@ -38,6 +40,7 @@ router.post("/", function(req, res){
   })
 });
 
+// MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next();

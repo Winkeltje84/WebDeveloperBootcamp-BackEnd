@@ -35,10 +35,12 @@ app.use(function(req, res, next){
   next();
 })
 
+// IMPORT ROUTES
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use(indexRoutes);
 
+// RUN SERVER
 app.listen("1111", function(){
   console.log("server running on http://localhost:1111");
 })

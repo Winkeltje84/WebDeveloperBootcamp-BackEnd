@@ -5,19 +5,18 @@ var express = require("express"),
 var router = express.Router();
 
 // ROOT PATH
-
 router.get("/", function(req, res){
   console.log("GET ROOT visted")
   res.render("home");
 })
 
-// AUTH ROUTES
-
+// REGISTER ROUTE
 router.get("/register", function(req, res){
   console.log("GET '/register' visited");
   res.render('register')
 });
 
+// REGISTER POST ROUTE -> create new user
 router.post("/register", function(req, res){
   console.log("post '/register' executed");
   var newUser = new User({username: req.body.username});
@@ -34,12 +33,14 @@ router.post("/register", function(req, res){
   });
 })
 
+// GET LOGIN ROUTE -> showing login form
 router.get("/login", function(req, res){
   console.log("GET '/login' requested");
   console.log("rendering login page...");
   res.render('login');
 })
 
+// POST LOGIN ROUTE -> logging user in
 router.post("/login", passport.authenticate("local",
   {
     successRedirect: "/campgrounds",
@@ -47,6 +48,7 @@ router.post("/login", passport.authenticate("local",
   }), function(req, res){
 })
 
+// LOGOUT ROUTE -> logs out user
 router.get("/logout", function(req, res){
   console.log("GET '/logout' requested");
   req.logout();
@@ -54,14 +56,13 @@ router.get("/logout", function(req, res){
   res.redirect("/");
 })
 
-// ===== WRONG ROUTES
-
+// WRONG ROUTE --> redirect to ROOT
 router.get("*", function(req, res){
-  console.log("GET 'none existend' url visited")
-  res.send("Sorry, you ended at a nonexistend url...")
+  console.log("GET 'none existend' url visited, redirecting to ROOT...");
+  res.redirect("/");
 })
 
-// ===== MIDDLEWARE
+// MIDDLEWARE
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){

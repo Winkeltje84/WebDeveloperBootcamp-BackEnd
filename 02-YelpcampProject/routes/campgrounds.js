@@ -3,6 +3,7 @@ var Campground = require('../models/campground');
 
 var router = express.Router();
 
+// GET CAMPGROUNDS INDEX PATH
 router.get("/", function(req, res){
   console.log("GET /campgrounds visited")
   Campground.find({}, function(err, campgrounds){
@@ -14,6 +15,7 @@ router.get("/", function(req, res){
   })
 })
 
+// POST CAMPGROUND --> creating new campground
 router.post("/", isLoggedIn, function(req, res){
   console.log("POST /campgrounds visited");
   var name = req.body.name;
@@ -32,11 +34,13 @@ router.post("/", isLoggedIn, function(req, res){
   });
 });
 
+// GET NEW (CAMPGROUND) --> rendering form for new campground
 router.get("/new", function(req, res){
   console.log("GET /campgrounds/new visited")
   res.render("campgrounds/new");
 })
 
+// GET SHOW (CAMPGROUND) --> show page of particular campground
 router.get("/:id", function(req, res){
   var id = req.params.id;
   Campground.findById(id).populate("comments").exec(function(err, foundCampground){
@@ -50,12 +54,12 @@ router.get("/:id", function(req, res){
   })
 })
 
+//  MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next();
   }
   res.redirect("/login");
 }
-
 
 module.exports = router;
