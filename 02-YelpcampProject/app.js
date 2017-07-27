@@ -82,7 +82,7 @@ app.get("/campgrounds/:id", function(req, res){
 
 // ===== COMMENT ROUTES
 
-app.get("/campgrounds/:id/comments/new", function(req, res){
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res){
   var id = req.params.id;
   Campground.findById(id, function(err, foundCampground){
     if(err){
@@ -165,6 +165,16 @@ app.get("*", function(req, res){
   console.log("GET 'none existend' url visited")
   res.send("Sorry, you ended at a nonexistend url...")
 })
+
+// ===== MIDDLEWARE
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
+
 
 app.listen("1111", function(){
   console.log("server running on http://localhost:1111");
