@@ -5,7 +5,8 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     User = require("./models/user"),
-    seedDB = require('./seeds');
+    seedDB = require('./seeds'),
+    methodOverride = require('method-override');
 
 var commentRoutes     = require("./routes/comments"),
     campgroundRoutes  = require("./routes/campgrounds"),
@@ -16,6 +17,7 @@ var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 seedDB();
 
 // PASSPORT CONFIGURATION

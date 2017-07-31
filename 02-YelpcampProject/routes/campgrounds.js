@@ -64,6 +64,54 @@ router.get("/:id", isLoggedIn, function(req, res){
   })
 })
 
+// GET EDIT (CAMPGROUND) --> show edit page of particular campground
+router.get("/:id/edit", isLoggedIn, function(req, res){
+  id = req.params.id;
+  console.log("GET /campgrounds/" + id + "/edit visited --> rendering edit page...")
+  Campground.findById(id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+    } else {
+      res.render("campgrounds/edit", { campground: foundCampground });
+    }
+  })})
+
+// POST EDIT (CAMPGROUND) --> submit the edit form of a specific campground
+router.put("/:id", isLoggedIn, function(req, res){
+  var id = req.params.id;
+  var campground = req.body.campground;
+  console.log("Campground is being updated...");
+
+  Campground.findByIdAndUpdate(id, campground, function(err, updatedCampground){
+    if(err){
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+      console.log("Succesfully edited campground, rendering show view...");
+      res.redirect("/campgrounds/" + id);
+    }
+  })
+})
+
+
+// var id = req.params.id;
+// req.body.blogPost.body = req.sanitize(req.body.blogPost.body);
+// var blogPost = req.body.blogPost;
+// // console.log(blogPost)
+// console.log("PUT /blogs/" + id + " --> blog post edit is being executed...")
+//
+// // findByIdAndUpdate takes 3 arguments: id, newData & callback
+// Blog.findByIdAndUpdate(id, blogPost, function(err, updatedBlogPost){
+//   if(err){
+//     console.log(err);
+//     console.log("There was an error finding & updating blog post with id " + id);
+//     res.redirect("/blogs");
+//   } else {
+//     console.log("Succesfully edited blog post, rendering show view...");
+//     res.redirect("/blogs/" + id);
+//   }
+// })
+
 //  MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
