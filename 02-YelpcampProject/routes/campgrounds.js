@@ -93,23 +93,33 @@ router.put("/:id", isLoggedIn, function(req, res){
   })
 })
 
+router.delete("/:id", function(req, res){
+  var id = req.params.id;
+  console.log("DEL /campgrounds/" + id + " --> deleting campground...");
+  Campground.findByIdAndRemove(id, function(err){
+    if(err){
+      console.log("an error occured, could not DELETE campground\nRedirect to /campgrounds");
+      console.log(err);
+      res.redirect("/campgrounds");
+    } else {
+      console.log("Succesfully deleted campground, redirecting to /campgrounds...");
+      res.redirect("/campgrounds");
+    }
+  })
+})
 
-// var id = req.params.id;
-// req.body.blogPost.body = req.sanitize(req.body.blogPost.body);
-// var blogPost = req.body.blogPost;
-// // console.log(blogPost)
-// console.log("PUT /blogs/" + id + " --> blog post edit is being executed...")
-//
-// // findByIdAndUpdate takes 3 arguments: id, newData & callback
-// Blog.findByIdAndUpdate(id, blogPost, function(err, updatedBlogPost){
-//   if(err){
-//     console.log(err);
-//     console.log("There was an error finding & updating blog post with id " + id);
-//     res.redirect("/blogs");
-//   } else {
-//     console.log("Succesfully edited blog post, rendering show view...");
-//     res.redirect("/blogs/" + id);
-//   }
+// app.delete("/blogs/:id", function(req, res){
+//   var id = req.params.id;
+//   console.log("DEL /blogs/" + id + " --> deleting blogpost...");
+//   Blog.findByIdAndRemove(id, function(err){
+//     if(err){
+//       console.log("An error occured, could not DELETE blog post");
+//       console.log(err);
+//     } else {
+//       console.log("Succesfully deleted blog post, redirecting to blogposts...");
+//       res.redirect("/blogs");
+//     }
+//   })
 // })
 
 //  MIDDLEWARE

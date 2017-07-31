@@ -14,3 +14,7 @@
   padding-left: 10px;
   font-style: italic;
 }
+
+#del-campground-form {
+  display: inline;
+}
