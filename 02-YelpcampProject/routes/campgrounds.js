@@ -60,7 +60,7 @@ router.get("/:id", function(req, res){
     } else {
       console.log("User visits a Campground show page:");
       console.log(foundCampground);
-      res.render("campgrounds/show", { campground: foundCampground, userID: req.user._id});
+      res.render("campgrounds/show", { campground: foundCampground});
     }
   })
 })
