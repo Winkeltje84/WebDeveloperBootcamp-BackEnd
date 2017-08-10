@@ -1,7 +1,36 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>YelpCamp</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/landing.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+    </head>
+    <body>
 
-<h1>Home</h1>
+    <div class="container">
+      <% if(message_success && message_success.length > 0){ %>
+        <div class="alert alert-success"><%= message_success %></div>
+      <% } %>
+      <% if(message_error && message_error.length > 0){ %>
+        <div class="alert alert-danger"><%= message_error %></div>
+      <% } %>
+      <% if(message_info && message_info.length > 0){ %>
+        <div class="alert alert-info"><%= message_info %></div>
+      <% } %>
+    </div>
 
-<a href="/campgrounds">View all campgrounds</a>
+    <div id="landing-header">
+   		<h1>Welcome to YelpCamp!</h1>
+  		<a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+    </div>
+
+    <ul class="slideshow">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 
 <% include partials/footer %>

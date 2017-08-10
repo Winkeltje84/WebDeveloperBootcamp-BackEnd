@@ -36,6 +36,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   Campground.create(newCampground, function(err, newCampground){
     if(err){
       console.log("Couldn't create campground:");
+      req.flash("error", "Something went wrong, couldn't create Campground");
       console.log(err);
     } else {
       console.log("Newley created campground:");
