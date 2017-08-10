@@ -17,7 +17,7 @@ router.get("/new", isLoggedIn, function(req, res){
 })
 
 // COMMENTS POST
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
   var id = req.params.id;
   console.log("POST /campgrounds/" + id + "/comments visited --> creating new comment" );
   Campground.findById(id, function(err, campground){
@@ -44,7 +44,7 @@ router.post("/", function(req, res){
 });
 
 // GET EDIT COMMENTS PAGE ROUTE
-router.get("/:comment_id/edit", function(req, res){
+router.get("/:comment_id/edit", checkCommentOwnership, function(req, res){
   var id = req.params.id;
   var comment_id = req.params.comment_id;
   console.log("GET /campgrounds/" + id + "/comments/" + comment_id + "/edit requested --> rendering comment edit page")
@@ -68,7 +68,7 @@ router.get("/:comment_id/edit", function(req, res){
 })
 
 // COMMENT UPDATE ROUTE - PUT REQUEST (actually edit the comment)
-router.put("/:comment_id", function(req, res){
+router.put("/:comment_id", checkCommentOwnership, function(req, res){
   var comment_id = req.params.comment_id;
   var comment = req.body.comment;
   var campground_id = req.params.id
@@ -86,7 +86,7 @@ router.put("/:comment_id", function(req, res){
 })
 
 // COMMENT DESTROY ROUTE
-router.delete("/:comment_id", function(req, res){
+router.delete("/:comment_id", checkCommentOwnership, function(req, res){
   var campground_id = req.params.id;
   var comment_id = req.params.comment_id;
   console.log("DEL /campgrounds/" + campground_id + "/comments/" + comment_id + " --> deleting comment...");
@@ -108,6 +108,35 @@ function isLoggedIn(req, res, next){
   }
   res.redirect("/login");
 }
+
+function checkCommentOwnership(req, res, next){
+  // check if user is logged in
+  if(req.isAuthenticated()){
+    Comment.findById(req.params.comment_id, function(err, foundComment){
+      console.log(foundComment.author.id);
+      console.log(req.user._id);
+      if(err){
+        console.log("checkCommentOwnership: there was an error with .findById --> redirecting 'back' to previous page...");
+        console.log(err);
+        return res.redirect("back");
+      } else {
+        // comment id found: check if Comment author id is same as current user id
+        if(foundComment.author.id.equals(req.user._id)){
+          console.log("checkCommentOwnership: user authorization succesful --> Middleware: 'return next()'")
+          next();
+        } else {
+          console.log("checkCommentOwnership: user not authorized --> redirecting 'back' to previous page");
+          res.redirect("back");
+        }
+      }
+    })
+  } else {
+    // if user is not logged in
+    console.log("checkCommentOwnership: user not logged in --> Redirect to login page...")
+    res.redirect("/login");
+  }
+}
+
 
 
 module.exports = router;
