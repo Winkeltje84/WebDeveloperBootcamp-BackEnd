@@ -43,6 +43,49 @@ router.post("/", function(req, res){
   })
 });
 
+// GET EDIT COMMENTS PAGE ROUTE
+router.get("/:comment_id/edit", function(req, res){
+  var id = req.params.id;
+  var comment_id = req.params.comment_id;
+  console.log("GET /campgrounds/" + id + "/comments/" + comment_id + "/edit requested --> rendering comment edit page")
+  Comment.findById(comment_id, function(err, foundComment){
+    if(err){
+      console.log(err);
+      res.redirect("back");
+    } else {
+      // console.log(foundComment);
+      Campground.findById(id, function(err, foundCampground){
+        if(err){
+          console.log(err);
+          res.redirect("back");
+        } else {
+          // console.log(foundCampground);
+          res.render("comments/edit", { comment: foundComment, campground: foundCampground });
+        }
+      })
+    }
+  })
+})
+
+// PUT COMMENT (actually edit the comment)
+router.put("/:comment_id", function(req, res){
+  var comment_id = req.params.comment_id;
+  var comment = req.body.comment;
+  var campground_id = req.params.id
+
+  console.log("Comment is being updated...");
+  Comment.findByIdAndUpdate(comment_id, comment, function(err, updatedComment){
+    if(err){
+      console.log(err);
+      res.redirect("/campgrounds/" + campground_id);
+    } else {
+      console.log("Succesfully edited comment, rendering campground show view...");
+      res.redirect("/campgrounds/" + campground_id);
+    }
+  })
+})
+
+
 // MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
