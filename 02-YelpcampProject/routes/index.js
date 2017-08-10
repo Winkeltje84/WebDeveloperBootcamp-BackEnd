@@ -37,7 +37,7 @@ router.post("/register", function(req, res){
 router.get("/login", function(req, res){
   console.log("GET '/login' requested");
   console.log("rendering login page...");
-  res.render('login', { message: req.flash("error")});
+  res.render('login');
 })
 
 // POST LOGIN ROUTE -> logging user in
@@ -61,14 +61,5 @@ router.get("*", function(req, res){
   console.log("GET 'none existend' url visited, redirecting to ROOT...");
   res.redirect("/");
 })
-
-// MIDDLEWARE
-
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect("/login");
-}
 
 module.exports = router;
