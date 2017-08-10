@@ -28,6 +28,7 @@ router.post("/register", function(req, res){
     }
     passport.authenticate("local")(req, res, function(){
       console.log("Authentication successful, redirecting to '/campgrounds'");
+      req.flash("info", "Welcome to Yelpcamp new user!")
       res.redirect("/campgrounds");
     });
   });
@@ -46,6 +47,7 @@ router.post("/login", passport.authenticate("local",
     successRedirect: "/campgrounds",
     failureRedirect: "/login"
   }), function(req, res){
+    req.flash("success", "Welcome back!")
 })
 
 // LOGOUT ROUTE -> logs out user
@@ -53,12 +55,14 @@ router.get("/logout", function(req, res){
   console.log("GET '/logout' requested");
   req.logout();
   console.log("logout successful, redirecting to home...");
+  req.flash("info", "You are logged out")
   res.redirect("/");
 })
 
 // WRONG ROUTE --> redirect to ROOT
 router.get("*", function(req, res){
   console.log("GET 'none existend' url visited, redirecting to ROOT...");
+  req.flash("error", "Oops! You tried to visit an none-existend page!")
   res.redirect("/");
 })
 

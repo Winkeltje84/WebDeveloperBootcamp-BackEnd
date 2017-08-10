@@ -21,6 +21,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
       if(err){
         console.log("checkCommentOwnership: there was an error with .findById --> redirecting 'back' to previous page...");
         console.log(err);
+        req.flash("error", "Comment not found");
         return res.redirect("back");
       } else {
         // comment id found: check if Comment author id is same as current user id
@@ -29,6 +30,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
           next();
         } else {
           console.log("checkCommentOwnership: user not authorized --> redirecting 'back' to previous page");
+          req.flash("error", "This is not your comment. You are not authorized to do this!")
           res.redirect("back");
         }
       }
@@ -36,6 +38,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
   } else {
     // if user is not logged in
     console.log("checkCommentOwnership: user not logged in --> Redirect to login page...")
+    req.flash("error", "Please login first");
     res.redirect("/login");
   }
 }
@@ -44,10 +47,9 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
   // check if user is logged in
   if(req.isAuthenticated()){
     Campground.findById(req.params.id, function(err, foundCampground){
-      // console.log(foundCampground.user.id);
-      // console.log(req.user._id);
       if(err){
         console.log("checkCampgroundOwnership: there was an error with .findById --> redirecting 'back' to previous page...")
+        req.flash("error", "Campground not found");
         return res.redirect("back");
       } else {
         // campground id found: check if Campground author id is same as current user id
@@ -56,13 +58,15 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
           next();
         } else {
           console.log("checkCampgroundOwnership: user not authorized --> redirecting 'back' to previous page");
+          req.flash("error", "This is not your campground. You are not authorized to do this!")
           res.redirect("back");
         }
       }
     })
   } else {
     // if user is not logged in
-    console.log("checkCampgroundOwnership: user not logged in --> Redirect to login page...")
+    console.log("checkCampgroundOwnership: user not logged in --> Redirect to login page...");
+    req.flash("error", "Please login first");
     res.redirect("/login");
   }
 }
