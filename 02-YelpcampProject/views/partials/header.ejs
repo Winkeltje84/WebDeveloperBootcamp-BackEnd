@@ -33,3 +33,15 @@
         </div>
       </div>
     </nav>
+
+    <div class="container">
+      <% if(message_success && message_success.length > 0){ %>
+        <div class="alert alert-success"><%= message_success %></div>
+      <% } %>
+      <% if(message_error && message_error.length > 0){ %>
+        <div class="alert alert-danger"><%= message_error %></div>
+      <% } %>
+      <% if(message_info && message_info.length > 0){ %>
+        <div class="alert alert-info"><%= message_info %></div>
+      <% } %>
+    </div>
