@@ -37,7 +37,7 @@ router.post("/register", function(req, res){
 router.get("/login", function(req, res){
   console.log("GET '/login' requested");
   console.log("rendering login page...");
-  res.render('login');
+  res.render('login', { message: req.flash("error")});
 })
 
 // POST LOGIN ROUTE -> logging user in

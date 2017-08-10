@@ -2,6 +2,7 @@ var express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
+    flash = require('connect-flash'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     User = require("./models/user"),
@@ -18,6 +19,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
+app.use(flash());
 // seedDB();
 
 // PASSPORT CONFIGURATION
