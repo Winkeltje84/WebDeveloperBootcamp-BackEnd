@@ -67,7 +67,7 @@ router.get("/:comment_id/edit", function(req, res){
   })
 })
 
-// PUT COMMENT (actually edit the comment)
+// COMMENT UPDATE ROUTE - PUT REQUEST (actually edit the comment)
 router.put("/:comment_id", function(req, res){
   var comment_id = req.params.comment_id;
   var comment = req.body.comment;
@@ -85,6 +85,21 @@ router.put("/:comment_id", function(req, res){
   })
 })
 
+// COMMENT DESTROY ROUTE
+router.delete("/:comment_id", function(req, res){
+  var campground_id = req.params.id;
+  var comment_id = req.params.comment_id;
+  console.log("DEL /campgrounds/" + campground_id + "/comments/" + comment_id + " --> deleting comment...");
+  Comment.findByIdAndRemove(comment_id, function(err){
+    if(err){
+      console.log("error in deleting comment... redirect 'back'...");
+      res.redirect("back");
+    } else {
+      console.log("Succesfully deleted comment, redirecting to campground show view...");
+      res.redirect("/campgrounds/" + campground_id);
+    }
+  })
+})
 
 // MIDDLEWARE
 function isLoggedIn(req, res, next){
