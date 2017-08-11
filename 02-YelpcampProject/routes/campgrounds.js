@@ -1,6 +1,7 @@
 var express = require('express');
 var Campground = require('../models/campground');
 var middleware = require('../middleware/index');
+var geocoder = require('geocoder');
 
 var router = express.Router();
 
@@ -26,27 +27,38 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   var user = {
       id: req.user._id,
       username: req.user.username
-  }
-  var newCampground = {
-    name: name,
-    image: image,
-    price: price,
-    description: description,
-    user: user
-  }
-
-  Campground.create(newCampground, function(err, newCampground){
+  };
+  geocoder.geocode(req.body.location, function(err, data){
     if(err){
-      console.log("Couldn't create campground:");
-      req.flash("error", "Something went wrong, couldn't create Campground");
       console.log(err);
     } else {
-      console.log("Newley created campground:");
-      console.log(newCampground);
-      req.flash("success", "Succesfully created a campground")
-      res.redirect("/campgrounds");
+      var lat = data.results[0].geometry.location.lat;
+      var lng = data.results[0].geometry.location.lng;
+      var location = data.results[0].formatted_address;
     }
-  });
+    var newCampground = {
+      name: name,
+      image: image,
+      price: price,
+      location: location,
+      lat: lat,
+      lng: lng,
+      description: description,
+      user: user
+    }
+    Campground.create(newCampground, function(err, newCampground){
+      if(err){
+        console.log("Couldn't create campground:");
+        req.flash("error", "Something went wrong, couldn't create Campground");
+        console.log(err);
+      } else {
+        console.log("Newley created campground:");
+        console.log(newCampground);
+        req.flash("success", "Succesfully created a campground")
+        res.redirect("/campgrounds");
+      }
+    });
+  })
 });
 
 // GET NEW (CAMPGROUND) --> rendering form for new campground
