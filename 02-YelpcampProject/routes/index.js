@@ -13,7 +13,7 @@ router.get("/", function(req, res){
 // REGISTER ROUTE
 router.get("/register", function(req, res){
   console.log("GET '/register' visited");
-  res.render('register')
+  res.render('register', { page: 'register'});
 });
 
 // REGISTER POST ROUTE -> create new user
@@ -39,7 +39,7 @@ router.post("/register", function(req, res){
 router.get("/login", function(req, res){
   console.log("GET '/login' requested");
   console.log("rendering login page...");
-  res.render('login');
+  res.render('login', { page: 'login'});
 })
 
 // POST LOGIN ROUTE -> logging user in
