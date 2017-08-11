@@ -21,6 +21,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   console.log("POST /campgrounds visited");
   var name = req.body.name;
   var image = req.body.image;
+  var price = req.body.price;
   var description = req.body.description;
   var user = {
       id: req.user._id,
@@ -29,6 +30,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   var newCampground = {
     name: name,
     image: image,
+    price: price,
     description: description,
     user: user
   }
