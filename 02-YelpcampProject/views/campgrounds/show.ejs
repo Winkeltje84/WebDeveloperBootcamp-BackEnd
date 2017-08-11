@@ -7,6 +7,7 @@
       <li class="list-group-item active">Info 1</li>
       <li class="list-group-item">Info 2</li>
       <li class="list-group-item">Info 3</li>
+      <div id="map"></div>
     </div>
   </div>
   <div class="col-md-9">
@@ -53,5 +54,24 @@
     </div>
   </div>
 </div>
+
+<script>
+      function initMap() {
+        var lat = <%= campground.lat %>;
+        var lng = <%= campground.lng %>;
+        var center = {lat: lat, lng: lng};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: center
+        });
+        var marker = new google.maps.Marker({
+          position: center,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXLAMQsTs5m3KzzJZVvsBWdbEFBTXbXCU&callback=initMap">
+    </script>
 
 <% include ../partials/footer %>

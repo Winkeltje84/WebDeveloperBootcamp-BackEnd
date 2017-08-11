@@ -1,6 +1,7 @@
 var express = require('express');
 var Campground = require('../models/campground');
 var middleware = require('../middleware/index');
+var geocoder = require('geocoder');
 
 var router = express.Router();
 
@@ -26,27 +27,38 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   var user = {
       id: req.user._id,
       username: req.user.username
-  }
-  var newCampground = {
-    name: name,
-    image: image,
-    price: price,
-    description: description,
-    user: user
-  }
-
-  Campground.create(newCampground, function(err, newCampground){
+  };
+  geocoder.geocode(req.body.location, function(err, data){
     if(err){
-      console.log("Couldn't create campground:");
-      req.flash("error", "Something went wrong, couldn't create Campground");
       console.log(err);
     } else {
-      console.log("Newley created campground:");
-      console.log(newCampground);
-      req.flash("success", "Succesfully created a campground")
-      res.redirect("/campgrounds");
+      var lat = data.results[0].geometry.location.lat;
+      var lng = data.results[0].geometry.location.lng;
+      var location = data.results[0].formatted_address;
     }
-  });
+    var newCampground = {
+      name: name,
+      image: image,
+      price: price,
+      location: location,
+      lat: lat,
+      lng: lng,
+      description: description,
+      user: user
+    }
+    Campground.create(newCampground, function(err, newCampground){
+      if(err){
+        console.log("Couldn't create campground:");
+        req.flash("error", "Something went wrong, couldn't create Campground");
+        console.log(err);
+      } else {
+        console.log("Newley created campground:");
+        console.log(newCampground);
+        req.flash("success", "Succesfully created a campground")
+        res.redirect("/campgrounds");
+      }
+    });
+  })
 });
 
 // GET NEW (CAMPGROUND) --> rendering form for new campground
@@ -88,17 +100,34 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
 // POST EDIT (CAMPGROUND) --> submit the edit form of a specific campground
 router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
   var id = req.params.id;
-  var campground = req.body.campground;
-  console.log("Campground is being updated...");
-
-  Campground.findByIdAndUpdate(id, campground, function(err, updatedCampground){
+  geocoder.geocode(req.body.campground.location, function(err, data){
     if(err){
       console.log(err);
-      res.redirect("/campgrounds");
     } else {
-      console.log("Succesfully edited campground, rendering show view...");
-      req.flash("success", "Successfully edited your campground")
-      res.redirect("/campgrounds/" + id);
+      var lat = data.results[0].geometry.location.lat;
+      var lng = data.results[0].geometry.location.lng;
+      var location = data.results[0].formatted_address;
+      var edited_campground = {
+        name: req.body.campground.name,
+        image: req.body.campground.image,
+        price: req.body.campground.price,
+        location: location,
+        lat: lat,
+        lng: lng,
+        description: req.body.campground.description
+      }
+      console.log("Campground is being updated...");
+
+      Campground.findByIdAndUpdate(id, edited_campground, function(err, updatedCampground){
+        if(err){
+          console.log(err);
+          res.redirect("/campgrounds");
+        } else {
+          console.log("Succesfully edited campground, rendering show view...");
+          req.flash("success", "Successfully edited your campground")
+          res.redirect("/campgrounds/" + id);
+        }
+      })
     }
   })
 })
