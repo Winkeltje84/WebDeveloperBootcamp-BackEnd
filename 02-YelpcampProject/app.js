@@ -11,7 +11,8 @@ var express = require('express'),
 
 var commentRoutes     = require("./routes/comments"),
     campgroundRoutes  = require("./routes/campgrounds"),
-    indexRoutes       = require("./routes/index");
+    indexRoutes       = require("./routes/index"),
+    userRoutes        = require("./routes/users");
 
 mongoose.connect("mongodb://localhost/yelp_camp");
 var app = express();
@@ -47,6 +48,7 @@ app.use(function(req, res, next){
 // IMPORT ROUTES
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
+app.use("/users", userRoutes);
 app.use(indexRoutes);
 
 // RUN SERVER

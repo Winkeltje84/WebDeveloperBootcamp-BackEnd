@@ -74,6 +74,8 @@ router.get("/:id", function(req, res){
     if(err){
       console.log("Error, no such Campground found");
       console.log(err);
+      req.flash("error", "You seem to have requested a none-existend campground")
+      res.redirect("/campgrounds")
     } else {
       console.log("User visits a Campground show page:");
       console.log(foundCampground);

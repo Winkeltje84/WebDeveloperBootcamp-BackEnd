@@ -33,11 +33,18 @@
   width: 100%;
 }
 
-.nav-bar-admin {
-  background: #DA4533;
-  min-height: 25px;
-  margin: 0;
-  text-align: center;
-  padding-top: 10px;
+.navbar-default .navbar-nav > .admin-text > a {
   color: white;
+  background: #E05B58;
+  pointer-events: none;
+}
+
+.navbar-default .navbar-nav > .admin-btn > a {
+  color: white;
+  background: #E38823;
+}
+
+.navbar-default .navbar-nav > .admin-btn > a:hover {
+  color: black;
+  background: #E38823;
 }
