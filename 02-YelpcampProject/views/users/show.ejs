@@ -1,5 +1,11 @@
 <% include ../partials/header %>
 
-<h1>user profile page</h1>
+<ul>
+  <li><%= user.username %></li>
+  <li><%= user.firstName %></li>
+  <li><%= user.lastName %></li>
+  <li><%= user.email %></li>
+  <li><img src="<%= user.avatar %>" alt="Avatar picture"></li>
+</ul>
 
 <% include ../partials/footer %>

@@ -12,7 +12,7 @@ router.get("/:id", function(req, res){
       console.log("Oops, there was an error...");
       res.redirect("/campgrounds");
     } else {
-      res.render("users/show");
+      res.render("users/show", { user: foundUser });
     }
   })
 })
