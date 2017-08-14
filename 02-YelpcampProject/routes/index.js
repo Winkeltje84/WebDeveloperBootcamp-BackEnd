@@ -20,6 +20,9 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
   console.log("post '/register' executed");
   var newUser = new User({username: req.body.username});
+  if(req.body.secret_admin_code === "SuperSecretPassword"){
+    newUser.isAdmin = true;
+  }
   console.log("authenticating user...");
   User.register(newUser, req.body.password, function(err, user){
     if(err){

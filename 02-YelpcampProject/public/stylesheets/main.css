@@ -32,3 +32,24 @@
   height: 400px;
   width: 100%;
 }
+
+.navbar-default .navbar-nav > .admin-text > a {
+  color: white;
+  background: #E05B58;
+  pointer-events: none;
+}
+
+.navbar-default .navbar-nav > .admin-btn > a {
+  color: white;
+  background: #E38823;
+}
+
+.navbar-default .navbar-nav > .admin-btn > a:hover {
+  color: black;
+  background: #E38823;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+}
