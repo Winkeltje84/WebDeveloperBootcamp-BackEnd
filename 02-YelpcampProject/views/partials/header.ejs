@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="/stylesheets/main.css">
   </head>
   <body>
+    <% if(currentUser && currentUser.isAdmin){ %>
+      <nav class="navbar navbar-default nav-bar-admin">
+        <div class="container">
+          <p>You have admin rights!</p>
+        </div>
+      </nav>
+    <% } %>
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
