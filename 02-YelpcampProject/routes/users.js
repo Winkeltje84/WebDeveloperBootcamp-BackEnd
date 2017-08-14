@@ -1,5 +1,6 @@
 var express = require('express');
 var User    = require("../models/user");
+var Campground    = require("../models/campground");
 
 var router = express.Router();
 
@@ -12,7 +13,15 @@ router.get("/:id", function(req, res){
       console.log("Oops, there was an error...");
       res.redirect("/campgrounds");
     } else {
-      res.render("users/show", { user: foundUser });
+      Campground.find().where('user.id').equals(foundUser._id).exec(function(err, userCampgrounds){
+        if(err){
+          console.log("error, could not find campgrounds of user");
+          req.flash("error", "something went wrong");
+          res.redirect("/campgrounds");
+        } else {
+          res.render("users/show", { user: foundUser, campgrounds: userCampgrounds });
+        }
+      })
     }
   })
 })
