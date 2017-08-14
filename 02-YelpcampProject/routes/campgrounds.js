@@ -7,7 +7,7 @@ var router = express.Router();
 
 // GET CAMPGROUNDS INDEX PATH
 router.get("/", function(req, res){
-  console.log("GET /campgrounds visited")
+  console.log("GET /campgrounds visitedd");
   Campground.find({}, function(err, campgrounds){
     if(err){
       console.log(err)

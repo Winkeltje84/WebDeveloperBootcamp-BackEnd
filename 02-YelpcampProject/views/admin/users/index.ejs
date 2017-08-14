@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<% include ../../partials/header %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -16,9 +16,9 @@
         <% }%>
         <td><%= user.username %></td>
         <td><%= user.isAdmin %></td>
-        <td><a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit User</a></td>
+        <td><a class="btn btn-warning" href="/admin/users/<%= user._id %>/edit">Edit User</a></td>
       </tr>
     <% }) %>
   </tbody>
 </table>
-<% include ../partials/footer %>
+<% include ../../partials/footer %>
