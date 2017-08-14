@@ -31,7 +31,7 @@
             <% } else { %>
               <% if(currentUser.isAdmin){ %>
                 <li class="admin-text"><a href="#">Admin</a></li>
-                <li class="admin-btn"><a href="users">User Menu</a></li>
+                <li class="admin-btn"><a href="/users">User Menu</a></li>
               <% } %>
               <li><a href="#">Signed In As <%= currentUser.username %></a></li>
               <li><a href="/logout">Logout</a></li>
