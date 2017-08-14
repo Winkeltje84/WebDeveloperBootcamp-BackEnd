@@ -80,3 +80,10 @@ body {
 .no-cssanimations .slideshow li {
 	opacity: 1;
 }
+
+.footer {
+  color: white;
+  position: fixed;
+  bottom: 0;
+  margin-left: 10px;
+}

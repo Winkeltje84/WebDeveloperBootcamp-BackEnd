@@ -48,3 +48,8 @@
   color: black;
   background: #E38823;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+}
