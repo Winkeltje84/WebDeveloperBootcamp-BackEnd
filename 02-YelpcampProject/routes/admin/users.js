@@ -1,6 +1,6 @@
 var express = require('express');
-var User = require('../models/user');
-var middleware = require('../middleware/index');
+var User = require('../../models/user');
+var middleware = require('../../middleware/index');
 
 var router = express.Router();
 
@@ -13,7 +13,7 @@ router.get("/", middleware.checkIfAdmin, function(req, res){
       console.log(err);
     } else {
       console.log(foundUsers);
-      res.render("users/index", { users: foundUsers});
+      res.render("admin/users/index", { users: foundUsers});
     }
   })
 })
@@ -29,7 +29,7 @@ router.get("/:id/edit", middleware.checkIfAdmin, function(req, res){
       res.redirect("/users");
     } else {
       console.log(foundUser);
-      res.render("users/edit", { user: foundUser });
+      res.render("admin/users/edit", { user: foundUser });
     }
   })
 })
@@ -49,7 +49,7 @@ router.put("/:id", middleware.checkIfAdmin, function(req, res){
     } else {
       console.log("Succesfully updated user, rendering '/users'");
       req.flash("succes", "Succesfully updated user");
-      res.redirect("/users");
+      res.redirect("/admin/users");
     }
   })
 })
