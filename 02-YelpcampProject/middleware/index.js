@@ -28,6 +28,9 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
         if(foundComment.author.id.equals(req.user._id)){
           console.log("checkCommentOwnership: user authorization succesful --> Middleware: 'return next()'")
           next();
+        } else if(req.user.isAdmin){
+          console.log("checkCommentOwnership: user is Administrator & allowed to edit/destroy --> Middleware: 'return next()'");
+          next();
         } else {
           console.log("checkCommentOwnership: user not authorized --> redirecting 'back' to previous page");
           req.flash("error", "This is not your comment. You are not authorized to do this!")
@@ -51,6 +54,9 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
         console.log("checkCampgroundOwnership: there was an error with .findById --> redirecting 'back' to previous page...")
         req.flash("error", "Campground not found");
         return res.redirect("back");
+      } else if(req.user.isAdmin){
+        console.log("checkCampgroundOwnership: user is Administrator & allowed to edit/destroy --> Middleware: 'return next()'");
+        next();
       } else {
         // campground id found: check if Campground author id is same as current user id
         if(foundCampground.user.id.equals(req.user._id)){
