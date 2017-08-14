@@ -16,6 +16,7 @@
     "express-session": "^1.15.4",
     "geocoder": "^0.2.3",
     "method-override": "^2.3.9",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.30",
     "mongoose": "^4.10.8",
     "passport": "^0.3.2",
