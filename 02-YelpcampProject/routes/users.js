@@ -4,24 +4,18 @@ var middleware = require('../middleware/index');
 
 var router = express.Router();
 
-
-
 // GET USERS INDEX PATH
-router.get("/", function(req, res){
-  res.send("users path reached");
+router.get("/", middleware.checkIfAdmin, function(req, res){
+  console.log("GET /users visited");
+  User.find({}, function(err, foundUsers){
+    if(err){
+      console.log("an error occured finding users");
+      console.log(err);
+    } else {
+      console.log(foundUsers);
+      res.render("users/index", { users: foundUsers});
+    }
+  })
 })
-//
-// router.get("/", function(req, res){
-//   console.log("GET /campgrounds visited")
-//   Campground.find({}, function(err, campgrounds){
-//     if(err){
-//       console.log(err)
-//     } else {
-//       res.render("campgrounds/index", {campgrounds: campgrounds, page: 'campgrounds'});
-//     }
-//   })
-// })
-//
-
 
 module.exports = router;

@@ -77,4 +77,15 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
   }
 }
 
+middlewareObj.checkIfAdmin = function(req, res, next){
+  if(req.isAuthenticated() && req.user.isAdmin){
+    console.log("user authenticated as Administrator --> Middleware: 'return next()'");
+    next();
+  } else {
+    console.log("user is no administrator, redirect to '/home'");
+    req.flash("error", "you are not authorised to visit this page");
+    res.redirect("/");
+  }
+}
+
 module.exports = middlewareObj
