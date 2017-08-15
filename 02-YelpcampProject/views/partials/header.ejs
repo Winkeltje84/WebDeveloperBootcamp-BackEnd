@@ -34,7 +34,9 @@
                 <li class="admin-btn"><a href="/admin/users">User Menu</a></li>
               <% } %>
               <li><a href="#">Signed In As <%= currentUser.username %></a></li>
+              <li class="<%= typeof page !== 'undefined' && page === 'profile' ? 'active' : '' %>"><a href="/users/<%= currentUser.id %>">Profile</a></li>
               <li><a href="/logout">Logout</a></li>
+
             <% } %>
           </ul>
         </div>

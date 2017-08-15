@@ -1,0 +1,40 @@
+<% include ../partials/header %>
+<% if(currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin ){ %>
+  <div class="user-profile-menu">
+    <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit Profile</a>
+  </div>
+<% } %>
+<div class="row">
+  <div class="col-md-8">
+    <div class="thumbnail">
+      <div class="caption text-center">
+        <h4><%= user.username %> - <em><%= user.firstName %> <%= user.lastName %></em></h4>
+      </div>
+      <img src="<%= user.avatar %>" alt="Avatar picture">
+      <div class="profile-description">
+        <h6>Description:</h6>
+        <% if(user.description){ %>
+          <p class="lead">
+            <%= user.description %>
+          </p>
+        <% } else { %>
+          <p class="lead">
+            * no description avaibable
+          </p>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <p>Posted campgrounds:</p>
+    <ul>
+      <% campgrounds.forEach(function(campground){ %>
+        <li><a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a></li>
+      <% }) %>
+    </ul>
+
+  </div>
+</div>
+
+<% include ../partials/footer %>

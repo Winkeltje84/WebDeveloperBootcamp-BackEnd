@@ -18,7 +18,7 @@
         <h4><a href="#"><%= campground.name %></a></h4>
         <p>description: <%= campground.description %></p>
         <p>
-          <em>Campground published by <%= campground.user.username %>, <%= moment(campground.createdAt).fromNow() %></em>
+          <em>Campground published by <a href="/users/<%= campground.user.id %>"><%= campground.user.username %></a>, <%= moment(campground.createdAt).fromNow() %></em>
         </p>
         <% if(currentUser && campground.user.id.equals(currentUser._id) || currentUser && currentUser.isAdmin ){ %>
           <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit Campground</a>

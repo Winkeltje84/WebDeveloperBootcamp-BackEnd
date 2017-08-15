@@ -1,0 +1,49 @@
+<% include ../partials/header %>
+
+<div class="row">
+  <h1 class="sign-title">Edit Profile</h1>
+  <div class="sign-form">
+    <form action="/users/<%= user._id %>?_method=PUT" class="form-horizontal" method="POST">
+      <div class="form-group">
+        <label for="username" class="col-sm-3 control-label">Username:</label>
+        <div class="col-sm-9">
+          <input class="form-control" type="text" name="user[username]" value="<%= user.username %>">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="firstName" class="col-sm-3 control-label">First Name:</label>
+        <div class="col-sm-9">
+          <input class="form-control" type="text" name="user[firstName]" value="<%= user.firstName %>">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName" class="col-sm-3 control-label">Last Name:</label>
+        <div class="col-sm-9">
+          <input class="form-control" type="text" name="user[lastName]" value="<%= user.lastName %>">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-sm-3 control-label">Email:</label>
+        <div class="col-sm-9">
+          <input class="form-control" type="email" name="user[email]" value="<%= user.email %>">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="avatar" class="col-sm-3 control-label">Avatar Picture:</label>
+        <div class="col-sm-9">
+          <input class="form-control" type="text" name="user[avatar]" value="<%= user.avatar %>">
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea name="user[description]" cols="30" rows="5" class="form-control" placeholder="tell us something interesting about yourself *"><%= user.description %></textarea>
+      </div>
+      <div class="form-group">
+        <button class="submit form-control btn btn-success" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<% include ../partials/footer %>

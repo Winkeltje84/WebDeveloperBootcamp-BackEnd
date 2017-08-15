@@ -1,5 +1,6 @@
-var Campground = require('../models/campground');
-var Comment = require('../models/comment');
+var Campground  = require('../models/campground');
+var Comment     = require('../models/comment');
+var User        = require('../models/user');
 
 // All Middleware functions of YelpcampProject
 var middlewareObj = {};
@@ -85,6 +86,29 @@ middlewareObj.checkIfAdmin = function(req, res, next){
     console.log("user is no administrator, redirect to '/home'");
     req.flash("error", "you are not authorised to visit this page");
     res.redirect("/");
+  }
+}
+
+middlewareObj.checkUserEditAuthority = function(req, res, next){
+  console.log("checking User Edit Authority...")
+  if(req.isAuthenticated()){
+    User.findById(req.params.id, function(err, foundUser){
+      if(err){
+        console.log("error, could not find user... redirecting 'back'...");
+        console.log(err);
+        res.redirect('back');
+      } else if(req.user.isAdmin){
+        console.log("checkUserEditAuthority: user is Administrator & allowed to edit --> Middleware: 'return next()'");
+        next();
+      } else if(foundUser._id.equals(req.user._id)){
+        console.log("checkUserEditAuthority: user owner user profile --> authorization succesful --> Middleware: 'return next()'")
+        next();
+      } else {
+        console.log("checkUserEditAuthority: user not authorized --> redirecting 'back' to previous page");
+        req.flash("error", "This is not your profile. You are not authorized to do this!")
+        res.redirect("back");
+      }
+    })
   }
 }
 
