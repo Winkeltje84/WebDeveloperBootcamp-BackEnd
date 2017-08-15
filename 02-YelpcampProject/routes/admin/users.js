@@ -19,21 +19,19 @@ router.get("/", middleware.checkIfAdmin, function(req, res){
 })
 
 // GET EDIT (USER) --> render the edit form for a specific user
-router.get("/:id/edit", middleware.checkIfAdmin, function(req, res){
+router.get("/:id/edit", middleware.checkUserEditAuthority, function(req, res){
   var id = req.params.id;
-  console.log("GET /user/" + id + "/edit visited --> rendering edit page...");
+  console.log("GET admin/user/" + id + "/edit visited --> rendering edit page by Admin...");
   User.findById(id, function(err, foundUser){
     if(err){
       console.log("error, user not found, redirecting to '/users'...");
       req.flash("error", "error, user not found, redirecting to '/users'...")
       res.redirect("/users");
     } else {
-      console.log(foundUser);
       res.render("admin/users/edit", { user: foundUser });
     }
   })
 })
-
 
 router.put("/:id", middleware.checkIfAdmin, function(req, res){
   var id = req.params.id;

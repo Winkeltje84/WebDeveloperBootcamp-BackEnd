@@ -1,4 +1,9 @@
 <% include ../partials/header %>
+<% if(currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin ){ %>
+  <div class="user-profile-menu">
+    <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit Profile</a>
+  </div>
+<% } %>
 <div class="row">
   <div class="col-md-8">
     <div class="thumbnail">
