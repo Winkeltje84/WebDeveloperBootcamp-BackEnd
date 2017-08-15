@@ -3,7 +3,7 @@
 <div class="row">
   <h1 class="sign-title">Edit <%= user.username %>'s Administrator Status</h1>
   <div class="sign-form">
-    <form class="form" action="/admin/users/<%= user._id %>?_method=PUT" method="POST">
+    <form class="form" action="/admin/users/<%= user._id %>/admin_status?_method=PUT" method="POST">
       <div class="form-group">
         <label for="isAdmin">Administrator</label>
         <select class="form-control" name="user[isAdmin]" placeholder="<%= user.isAdmin %>">

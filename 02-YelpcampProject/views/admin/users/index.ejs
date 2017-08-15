@@ -12,9 +12,9 @@
       <tr>
         <td><%= user.username %></td>
         <td><% if(user.isAdmin){ %>
-          <a class="btn btn-success" href="/admin/users/<%= user._id %>/edit">True</a>
+          <a class="btn btn-success" href="/admin/users/<%= user._id %>/admin_status/edit">True</a>
         <% } else { %>
-          <a class="btn btn-warning" href="/admin/users/<%= user._id %>/edit">False</a>
+          <a class="btn btn-warning" href="/admin/users/<%= user._id %>/admin_status/edit">False</a>
         <% } %></td>
         <td></td>
       </tr>

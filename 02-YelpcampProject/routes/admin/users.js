@@ -18,22 +18,23 @@ router.get("/", middleware.checkIfAdmin, function(req, res){
 })
 
 // GET EDIT (USER) --> render the edit form for a specific user
-router.get("/:id/edit", middleware.checkUserEditAuthority, function(req, res){
+router.get("/:id/admin_status/edit", middleware.checkUserEditAuthority, function(req, res){
   var id = req.params.id;
-  console.log("GET admin/user/" + id + "/edit visited --> rendering edit page by Admin...");
+  console.log("GET admin/user/" + id + "/admin_status/edit visited --> rendering admin status edit page by Admin...");
   User.findById(id, function(err, foundUser){
     if(err){
       console.log("error, user not found, redirecting to '/users'...");
-      req.flash("error", "error, user not found, redirecting to '/users'...")
-      res.redirect("/users");
+      req.flash("error", "error, user not found, redirecting to '/admin/users'...")
+      res.redirect("/admin/users");
     } else {
-      res.render("admin/users/edit", { user: foundUser });
+      res.render("admin/users/adminStatusEdit", { user: foundUser });
     }
   })
 })
 
-router.put("/:id", middleware.checkIfAdmin, function(req, res){
+router.put("/:id/admin_status", middleware.checkIfAdmin, function(req, res){
   var id = req.params.id;
+  console.log("PUT admin/user/" + id + "/admin_status visited --> saving new Admin Status user...")
   var edited_user = {
     isAdmin: req.body.user.isAdmin
   };
@@ -43,8 +44,8 @@ router.put("/:id", middleware.checkIfAdmin, function(req, res){
       req.flash("error", "Oops, something went wrong, could not update user")
       res.redirect("/users");
     } else {
-      console.log("Succesfully updated user, rendering '/users'");
-      req.flash("success", "Succesfully updated user");
+      console.log("Succesfully updated Admin Status user, rendering '/users'");
+      req.flash("success", "Succesfully updated Admin Status user");
       res.redirect("/admin/users");
     }
   })
