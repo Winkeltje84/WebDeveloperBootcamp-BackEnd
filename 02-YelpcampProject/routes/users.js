@@ -53,7 +53,8 @@ router.put("/:id", middleware.checkUserEditAuthority, function(req, res){
       console.log(err);
       res.redirect('back');
     } else {
-      console.log("Succesfully edited user, rendering user (profile) show view...");
+      console.log("Succesfully edited user (profile), rendering user (profile) show view...");
+      req.flash("success", "Succesfully updated user profile")
       res.redirect("/users/" + user_id);
     }
   })

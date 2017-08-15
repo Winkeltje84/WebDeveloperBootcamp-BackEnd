@@ -12,7 +12,6 @@ router.get("/", middleware.checkIfAdmin, function(req, res){
       console.log("an error occured finding users");
       console.log(err);
     } else {
-      console.log(foundUsers);
       res.render("admin/users/index", { users: foundUsers});
     }
   })
@@ -36,7 +35,6 @@ router.get("/:id/edit", middleware.checkUserEditAuthority, function(req, res){
 router.put("/:id", middleware.checkIfAdmin, function(req, res){
   var id = req.params.id;
   var edited_user = {
-    username: req.body.user.username,
     isAdmin: req.body.user.isAdmin
   };
   User.findByIdAndUpdate(id, edited_user, function(err, updatedUser){
@@ -46,7 +44,7 @@ router.put("/:id", middleware.checkIfAdmin, function(req, res){
       res.redirect("/users");
     } else {
       console.log("Succesfully updated user, rendering '/users'");
-      req.flash("succes", "Succesfully updated user");
+      req.flash("success", "Succesfully updated user");
       res.redirect("/admin/users");
     }
   })
