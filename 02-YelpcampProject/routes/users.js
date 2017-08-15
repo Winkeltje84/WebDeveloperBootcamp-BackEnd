@@ -13,6 +13,7 @@ router.get("/:id", function(req, res){
       console.log("Oops, there was an error...");
       res.redirect("/campgrounds");
     } else {
+      console.log(foundUser)
       Campground.find().where('user.id').equals(foundUser._id).exec(function(err, userCampgrounds){
         if(err){
           console.log("error, could not find campgrounds of user");
