@@ -14,7 +14,6 @@ router.get("/:id", middleware.isLoggedIn, function(req, res){
       console.log("Oops, there was an error...");
       res.redirect("/campgrounds");
     } else {
-      console.log(foundUser)
       Campground.find().where('user.id').equals(foundUser._id).exec(function(err, userCampgrounds){
         if(err){
           console.log("error, could not find campgrounds of user");
@@ -46,7 +45,7 @@ router.get("/:id/edit", middleware.checkUserEditAuthority, function(req, res){
 router.put("/:id", middleware.checkUserEditAuthority, function(req, res){
   var user_id = req.params.id;
   var new_user_data = req.body.user;
-  console.log("PUT /users/" + id + " visited --> performing edit...");
+  console.log("PUT /users/" + user_id + " visited --> performing edit...");
   User.findByIdAndUpdate(user_id, new_user_data, function(err, updatedUser){
     if(err){
       console.log("couldn't update user, rendering 'back'");
@@ -59,6 +58,5 @@ router.put("/:id", middleware.checkUserEditAuthority, function(req, res){
     }
   })
 })
-
 
 module.exports = router;

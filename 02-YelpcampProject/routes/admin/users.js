@@ -18,7 +18,7 @@ router.get("/", middleware.checkIfAdmin, function(req, res){
 })
 
 // GET EDIT (USER) --> render the edit form for a specific user
-router.get("/:id/admin_status/edit", middleware.checkUserEditAuthority, function(req, res){
+router.get("/:id/admin_status/edit", middleware.checkIfAdmin, function(req, res){
   var id = req.params.id;
   console.log("GET admin/user/" + id + "/admin_status/edit visited --> rendering admin status edit page by Admin...");
   User.findById(id, function(err, foundUser){

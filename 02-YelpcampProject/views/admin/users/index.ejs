@@ -14,9 +14,11 @@
         <td><% if(user.isAdmin){ %>
           <a class="btn btn-success" href="/admin/users/<%= user._id %>/admin_status/edit">True</a>
         <% } else { %>
-          <a class="btn btn-warning" href="/admin/users/<%= user._id %>/admin_status/edit">False</a>
+          <a class="btn btn-danger" href="/admin/users/<%= user._id %>/admin_status/edit">False</a>
         <% } %></td>
-        <td></td>
+        <td>
+          <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
+        </td>
       </tr>
     <% }) %>
   </tbody>
