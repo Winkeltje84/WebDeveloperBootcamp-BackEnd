@@ -19,7 +19,9 @@
         <td>
           <a class="btn btn-success" href="/users/<%= user._id %>">Show</a>
           <a class="btn btn-warning" href="/users/<%= user._id %>/edit">Edit</a>
-          <a class="btn btn-danger" href="#">Delete</a>
+          <form class="form del-form" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
         </td>
       </tr>
     <% }) %>
