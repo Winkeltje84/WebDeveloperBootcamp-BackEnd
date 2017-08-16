@@ -9,6 +9,9 @@
   },
   "author": "Bas Winkel",
   "license": "ISC",
+  "engines": {
+    "node": "6.9.5"
+  },
   "dependencies": {
     "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
