@@ -59,4 +59,20 @@ router.put("/:id", middleware.checkUserEditAuthority, function(req, res){
   })
 })
 
+router.delete("/:id", middleware.checkIfAdmin, function(req, res){
+  var user_id = req.params.id;
+  console.log("DELETE /user/" + user_id + " requested --> destroying user...")
+  User.findByIdAndRemove(user_id, function(err){
+    if(err){
+      console.log("Error, could not destroy user. Redirecting back...");
+      req.flash("error", "Could not destroy user");
+      res.redirect("back");
+    } else {
+      console.log("Succesfully destroyed user. Redirecting back...")
+      req.flash("success", "Succesfully destroyed user");
+      res.redirect("back");
+    }
+  })
+})
+
 module.exports = router;

@@ -18,7 +18,7 @@ router.get("/register", function(req, res){
 
 // REGISTER POST ROUTE -> create new user
 router.post("/register", function(req, res){
-  console.log("post '/register' executed");
+  console.log("POST '/register' executed");
   var newUser = new User({
     username: req.body.username,
     firstName: req.body.firstName,
@@ -28,6 +28,7 @@ router.post("/register", function(req, res){
     description: req.body.description,
   });
   if(req.body.secret_admin_code === "SuperSecretPassword"){
+    console.log("new user knows super secret password & becomes admin!!!")
     newUser.isAdmin = true;
   }
   console.log("authenticating user...");
